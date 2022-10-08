@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Home Page{% endblock %}</title>
+</head>
+    <body>
+        {% extends 'base.html' %}
+            {% block header %}
+
+            {% endblock %}
+
+        {% block content %}
+        {% if user.is_authenticated %}
+            <h6> Welcome <i>{{ user.username }}</i> -feel good here</h6>
+            <div id="posts">
+                {% for post in posts | sort(attribute='date_created', reverse=True) %}
+                <div class="card border-dark shadow">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <a href="/posts/{{ post.user.username }}">{{ post.user.username|title() }}</a>
+                        <div>
+<!--                            <span id="likes-count-{{post.id}}">{{ post.likes|length }}</span>-->
+
+<!--                            {% if user.id in post.likes|map(attribute="user_id")|list %}-->
+<!--                                <i class="fas fa-thumbs-up like-icon" id="like-Button-{{post.id}}" onclick="like({{post.id}})"><a href="#"></a></i>-->
+<!--                            {% else %}-->
+<!--                                <i class="far fa-thumbs-up like-icon" id="like-Button-{{post.id}}" onclick="like({{post.id}})"><a href="#"></a></i>-->
+<!--                            {% endif %}-->
+
+
+<!--                            {{ post.likes|length }}-->
+
+<!--                            {% if user.id in post.likes|map(attribute="user_id")|list %}-->
+<!--                                <a href="{{url_for('views.like', post_id=post.id)}}"><i class="fas fa-thumbs-up">rdm</i></a>-->
+<!--                            {% else %}-->
+<!--                                <a href="{{url_for('views.like', post_id=post.id)}}"><i class="far fa-thumbs-up">rdm</i></a>-->
+<!--                            {% endif %}-->
+
+                            {% if user.id==post.author %}
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown"></button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="/delete_post/{{post.id}}" class="dropdown-item">Delete</a></li>
+                                        <li><a href="{{url_for('views.edit_post', id=post.id)}}" class="dropdown-item">Edit</a></li>
+                                    </ul>
+                                </div>
+                            {% endif %}
+                        </div>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="card-text"><p>{{ post.text }}</p></div>
+
+                         <span id="likes-count-{{post.id}}">{{ post.likes|length }}</span>
+
+                            {% if user.id in post.likes|map(attribute="user_id")|list %}
+                                <i class="fa-sharp fa-solid fa-heart" id="like-Button-{{post.id}}" onclick="like({{post.id}})"></i>
+                            {% else %}
+                                <i class="fa-regular fa-heart" id="like-Button-{{post.id}}" onclick="like({{post.id}})"></i>
+                            {% endif %}
+
+                        <br>
+                        <div class="collapse" id="comments-{{post.id}}">
+                            <div class="card">
+                                <div class="card-body" id="comments-expanded-{{post.id}}">
+                                    {% for comment in post.comments %}
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <a href="/posts/{{comment.user_id.username}}"><small>{{comment.user.username}}</small></a>
+                                                <small>: {{comment.text}}</small>
+                                            </div>
+                                            <div>
+                                                <div class="text-muted">
+                                                    {{comment.date_created.strftime('%Y-%m-%d')}}
+                                                    {% if user.id==post.author or comment.user_id==user.id %}
+                                                        <div class="btn-group">
+                                                            <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown"></button>
+                                                            <ul class="dropdown-menu">
+                                                                <li><a href="{{url_for('views.delete_comments', comment_id=comment.id)}}" class="dropdown-item">Delete</a></li>
+                                                            </ul>
+                                                        </div>
+
+                                                    {% elif comment.user_id==user.id %}
+                                                        <ul class="dropdown-menu">
+                                                            <li><a href="{{url_for('views.edit_post', id=comment.id)}}" class="dropdown-item">Edit</a></li>
+                                                        </ul>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <p class="card-text">
+                            {% if post.comments|length > 0 %}
+                                <a data-toggle="collapse" href="#comments-{{post.id}}" role="button">
+                                    <small>View {{ post.comments|length}} Comments</small>
+                                </a>
+                            {% else %}
+                                <small class="text-muted">No Comments</small>
+                            {% endif %}
+                        </p>
+
+                        <br>
+                        <form class="input-group mb-3" method="post" action="/create_comment/{{post.id}}">
+                            <input type="text" id="text" name="text" class="form-control" placeholder="Make a comment">
+                            <button type="submit" class="btn btn-primary">Comment</button>
+                        </form>
+                    </div>
+                    <div class="card-footer text-muted">
+                        {{ post.date_created}}
+                    </div>
+                </div>
+                <br>
+                {% endfor %}
+            </div>
+            <div align="right">
+                <a href="{{url_for('views.create_post')}}"><button type="button" class="btn btn-secondary btn-m mb-4">Create Post</button></a>
+            </div>
+        {% else %}
+            <h5>This is the general index page. You are seeing this because you haven't logged in.</h5>
+            <br>
+            <h5>Would you like to <a href="{{url_for('auth.sign_up')}}">sign up?</a> </h5>
+
+        {% endif %}
+
+        {% endblock %}
+    </body>
+</html>

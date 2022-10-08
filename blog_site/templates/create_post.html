@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Create Post{% endblock %}</title>
+</head>
+<body>
+    {% extends 'base.html' %}
+    {% block header %}
+
+    {% endblock %}
+
+    {% block content %}
+        <h5 align="center">create a post and share with others</h5>
+        <div class="shadow">
+            <form method="post">
+                    <textarea id="text" name="text" class="form-control" placeholder="Enter text"></textarea>
+                    <br>
+                    <div align="right">
+                        <button type="submit" class="btn btn-m btn-primary">Post</button>
+                        <a href="{{ url_for('views.index')}}"><button type="button" class="btn btn-m btn-secondary">Home</button></a>
+                    </div>
+                </form>
+        </div>
+
+    {% endblock %}
+</body>
+</html>

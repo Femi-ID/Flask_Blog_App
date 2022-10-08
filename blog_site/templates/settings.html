@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}settings{% endblock %}</title>
+</head>
+<body>
+    {% extends 'base.html' %}
+        {% block content %}
+            <p>This is the settings page</p>
+            <br>
+            <audio ></audio>
+            <br>
+            <p>Only users who are logged in can see this page</p>
+            <br>
+            <p>If  you're seeing this, then I know you, I know what you are</p>
+            <br>
+            <p>Your details: name- {{user.username}}</p>
+            <br>
+            <p>email- {{user.email}}</p>
+            <br>
+            <p>date created-  {{user.date_created}}</p>
+            <br>
+            <p>Best believe the feds have this details and are unto you</p>
+        {% endblock %}
+
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} Sign Up {% endblock %}</title>
+</head>
+<body>
+{% extends 'base.html' %}
+
+    {% block header %}
+    {% endblock %}
+    {% block content %}
+        <h3 class="display-5">Hey there! like to sign Up?</h3>
+        <div class="jumbotron">
+            <p class="display-4" align="center">Share your thoughts and views on current trends.</p>
+            <p class="lead" align="center">View posts and interact with others. Let's gooo!</p>
+        </div>
+
+        <form method="POST">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" name="username" id="username" placeholder="John Doe" class="form-control" required>
+
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" placeholder="johndoe@abc.com" class="form-control" required>
+
+                <label for="password1">Password</label>
+                <input type="password" name="password1" id="password1" placeholder="Enter password" class="form-control" required>
+
+                <label for="password2"> Confirm Password</label>
+                <input type="password" name="password2" id="password2" placeholder="Re-Enter password" class="form-control" required>
+                <br>
+                <div align="center">
+                    <button type="submit" value="login" class="btn btn-dark">Sign Up</button>
+                </div>
+            </div>
+        </form>
+
+
+    {% endblock %}
+
+</body>
+</html>

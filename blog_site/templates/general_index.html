@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} General Home Page{% endblock %}</title>
+</head>
+<body>
+    {% extends 'base.html' %}
+    {% block header %}
+
+    {% endblock %}
+
+    {% block content %}
+        <h3>This is the  general index page. Welcome! -feel good here</h3>
+        <br>
+        <h5>Would you like to <a href="{{url_for('auth.sign_up')}}">Sign up?</a> Or <a href="{{url_for('auth.login')}}">Log In</a></h5>
+
+    {% endblock %}
+</body>
+</html>

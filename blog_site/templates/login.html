@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Log In{% endblock %}</title>
+</head>
+<body>
+    {% extends 'base.html' %}
+    {% block header %}
+
+    {% endblock %}
+    {% block content %}
+        <div class="jumbotron">
+            <p class="display-4" align="center">Welcome.</p>
+            <p class="lead" align="center">Create posts view and interact with others.<br> Let's gooo!</p>
+        </div>
+
+        <form method="post">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" placeholder="Enter email" class="form-control" required>
+
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" placeholder="Enter password" class="form-control" required>
+                <br>
+                <div align="center">
+                    <button type="submit" value="login" class="btn btn-dark">Log In</button>
+                </div>
+            </div>
+        </form>
+    {% endblock %}
+</body>
+</html>

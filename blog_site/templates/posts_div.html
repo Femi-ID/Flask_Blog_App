@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% block  header %}
+
+{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+            <div id="posts">
+                <h6> Welcome <i>{{ user.username }}</i> -feel good here</h6>
+                {% for post in posts | sort(attribute='date_created', reverse=True) %}
+                <div class="card border-dark shadow">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <a href="/posts/{{ post.user.username }}">{{ post.user.username }}</a>
+                        {% if user.id==post.author %}
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown"></button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="/delete_post/{{post.id}}" class="dropdown-item">Delete</a></li>
+                                    <li><a href="{{url_for('views.edit_post', id=post.id)}}" class="dropdown-item">Edit</a></li>
+                                </ul>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="card-body">
+                         <div class="card-text"><p>{{ post.text }}</p></div>
+                    </div>
+                    <div class="card-footer text-muted">
+                        {{ post.date_created}}
+                    </div>
+                </div>
+                <br>
+                {% endfor %}
+            </div>
+            <div align="right">
+                <a href="{{url_for('views.create_post')}}"><button type="button" class="btn btn-secondary btn-m mb-4">Create Post</button></a>
+            </div>
+        {% else %}
+            <h5>This is the general index page. You are seeing this because you haven't logged in.</h5>
+            <br>
+            <h5>Would you like to <a href="{{url_for('auth.sign_up')}}">sign up?</a> </h5>
+        {% endif %}
+{% endblock %}
+
+
+</body>
+</html>
